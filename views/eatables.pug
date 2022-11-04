@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  h1= title
+  -
+   let results =[
+      {
+        "eatable_Name": "Ice-Cream",
+        "flavour": "Chocolate",
+        "price": 50
+      },
+      {
+        "eatable_Name": "Pizza",
+        "flavour": "Chicken",
+        "price": 25
+      },
+      {
+        "eatable_Name": "Biriyani",
+        "flavour": "Hot and Spicy",
+        "price": 35
+      },
+      {
+        "eatable_Name": "Burger",
+        "flavour": "Thick and crust",
+        "price": 34
+      },
+      {
+        "eatable_Name": "French Frirs",
+        "flavour": "salt and Pepper",
+        "price": 12
+      }
+    ]
+  
+  
+  .container-fluid 
+    .row 
+      each eatable in results
+        div(class="col-sm-2"  onclick=`buy(${results.indexOf(eatable)})`) 
+          each value,key in eatable 
+            = " " +value
+  script.
+    function buy(param){
+      alert("You purchased item "+param)
+    }
