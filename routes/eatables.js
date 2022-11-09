@@ -1,9 +1,6 @@
 var express = require('express');
+const eatable_controlers= require('../controllers/eatable');
 var router = express.Router();
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('eatables', { title: 'JULAKANTI LOHITHA Search Results' });
-});
-
+/* GET eatables */
+router.get('/', eatable_controlers.eatable_view_all_Page );
 module.exports = router;
