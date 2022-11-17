@@ -1,0 +1,51 @@
+extends layout
+block content
+  style.  
+    h1{
+        color:grey;
+    }
+    body{
+        background:url('https://img.freepik.com/free-vector/engraving-hand-drawn-ice-cream-blackboard-background_23-2148989212.jpg');
+        background-size:cover;
+        background-repeat:no-repat;
+    }
+    label{
+        font-size:15px;
+    }
+    form{
+        padding:20px;
+        position:fixed;
+        top:50%;
+        background:rgba(0,0,0,0.5);
+        lefT:50%;
+        transform:translate(-50%,-50%);
+    }
+  form(id='EatableForm', action="/resource/eatables", method="POST")
+    h1= title
+        div.form-group
+            label.eatableAttr(for='eatable_name') Eatable type
+            input#eatable_name(type='text', name='eatable_name')
+        div.form-group
+            label.eatableAttr(for='flavor') Eatable flavor
+            input#flavor(type='text', name='flavor')
+        div.form-group
+            label.eatableAttr(for='price') Eatable price
+            input#price(type='number', name='price')
+        input(type="submit")
+    script. 
+        document.forms['EatableForm'].addEventListener('submit', (event) => { 
+        event.preventDefault(); 
+        // TODO do something here to show user that form is being submitted 
+        fetch(event.target.action, { 
+            method: 'POST', 
+            body: new URLSearchParams(new FormData(event.target)) // event.target is the form 
+        }).then((resp) => { 
+            return resp.json(); // or resp.text() or whatever the server sends 
+        }).then((body) => { 
+            alert("Save succeded") 
+            // TODO handle body 
+        }).catch((error) => { 
+            // TODO handle error 
+            alert("Save failed " + error ) 
+        }); 
+        }); 

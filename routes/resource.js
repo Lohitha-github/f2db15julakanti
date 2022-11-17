@@ -17,4 +17,5 @@ router.put('/eatables/:id', eatable_controller.eatable_update_put);
 router.get('/eatables/:id', eatable_controller.eatable_detail);
 // GET request for list of all Costume items.
 router.get('/eatables', eatable_controller.eatable_list);
+
 module.exports = router;

@@ -1,0 +1,23 @@
+extends layout
+block content
+    h1= title
+    if (toShow == null)
+        h2 No instance to delete
+    else
+        - let eatableid = toShow._id
+        - let eatable_name = toShow.eatable_name
+        - let flavor = toShow.flavor
+        - let price = toShow.price
+        div
+            div.row
+                div(class='eatableAttr mr-3') Eatable ID is:
+                div #{eatableid}
+            div.row
+                div(class='eatableAttr mr-3') Eatable Name is:
+                div #{eatable_name}
+            div.row
+                div(class='eatableAttr mr-3') Eatable Falvor is:
+                div #{flavor}
+            div.row
+                div(class='eatableAttr mr-3') Eatable Price is:
+                div #{price}
