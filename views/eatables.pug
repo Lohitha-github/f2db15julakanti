@@ -5,9 +5,14 @@ block content
   .container-fluid 
     .row 
       each eatable,key in results
+        - let destination = `dispatch(\"/eatables/update?id=${eatable._id}\")`
         div(class="col-sm-2"  onclick=`buy(${key})`) 
             = eatable.eatable_name+" "+eatable.flavor+" "+eatable.price
-  script.
-    function buy(param){
-      alert("You purchased item "+param)
-    }
+        button.btn( class="btn-primary ml-1", onclick= destination) Update
+    script.
+      function dispatch(path){
+            window.location.href=path
+      }
+      function buy(param){
+          alert("You purchased item "+param)
+      }

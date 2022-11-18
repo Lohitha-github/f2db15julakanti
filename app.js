@@ -2,6 +2,8 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 var logger = require('morgan');
 var Eatable = require("./models/eatable");
 var indexRouter = require('./routes/index');
@@ -10,10 +12,11 @@ var gridbuildRouter = require('./routes/gridbuild');
 var eatablesRouter = require('./routes/eatables');
 var selectorRouter = require('./routes/selector');
 var resourceRouter = require('./routes/resource');
+var Account = require('./models/account');
 
 var app = express();
 require('dotenv').config();
-const connectionString =process.env.MONGO_CON
+const connectionString = process.env.MONGO_CON
 mongoose = require('mongoose');
 mongoose.connect(connectionString,
   {
@@ -37,6 +40,29 @@ app.use('/gridbuild', gridbuildRouter);
 app.use('/eatables', eatablesRouter);
 app.use('/selector', selectorRouter);
 app.use('/resource', resourceRouter);
+passport.use(new LocalStrategy(
+  function (username, password, done) {
+    Account.findOne({ username: username }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    })
+  }))
+passport.use(new LocalStrategy(Account.authenticate()));
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
+app.use(require('express-session')({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
@@ -55,15 +81,15 @@ async function recreateDB() {
       eatable_name: "ice-cream", flavor: 'strawberry',
       price: 5.4
     });
-    let instance2 = new
+  let instance2 = new
     Eatable({
       eatable_name: "chocolate", flavor: 'coco',
       price: 6.4
     }); let instance3 = new
-    Eatable({
-      eatable_name: "pizza", flavor: 'cheese',
-      price: 5.4
-    });
+      Eatable({
+        eatable_name: "pizza", flavor: 'cheese',
+        price: 5.4
+      });
   instance1.save(function (err, doc) {
     if (err) return console.error(err);
     console.log("First object saved")
