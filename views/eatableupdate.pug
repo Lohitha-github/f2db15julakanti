@@ -33,10 +33,14 @@ block content
                 }).then((resp) => { 
                 return resp.json(); // or resp.text() or whatever the server sends 
                 }).then((body) => { 
-                alert("Save succeded") 
+                    if(body.error)
+                        alert("Save Failed - invalid data")
+                    else
+                        alert("Save succeded") 
                 // TODO handle body 
                 }).catch((error) => { 
                 // TODO handle error 
-                alert("Save failed " + error ) 
+                    alert("Save Failed - invalid data")
+
                 }); 
             }); 

@@ -7,8 +7,10 @@ block content
       each eatable,key in results
         - let destination = `dispatch(\"/eatables/update?id=${eatable._id}\")`
         div(class="col-sm-2"  onclick=`buy(${key})`) 
-            = eatable.eatable_name+" "+eatable.flavor+" "+eatable.price
+            = eatable.eatable_name
         button.btn( class="btn-primary ml-1", onclick= destination) Update
+        a(class="btn btn-primary" href=`/eatables/delete?id=${eatable._id}`) delete
+        a(class="btn btn-primary" href=`/eatables/detail?id=${eatable._id}`) Details 
     script.
       function dispatch(path){
             window.location.href=path

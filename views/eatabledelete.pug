@@ -11,40 +11,40 @@ block content
       - let flavor = toShow.flavor
       - let price = toShow.price
       - let actionid = "/resource/eatables/" + eatableid
-    script let actionid = "#{actionid}"
-    div
-        div.row
-            div(class='eatableAttr mr-3') Eatable ID is:
-            div #{eatableid}
-        div.row
-            div(class='eatableAttr mr-3') Eatable Type is:
-            div #{eatable_name}
-        div.row
-            div(class='eatableAttr mr-3') Eatable Size is:
-            div #{flavor}
-        div.row
-            div(class='eatableAttr mr-3') Eatable Cost is:
-            div #{price}
-        button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete
-        button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
-    script.
-        function cancel() {
-            window.location.href='/eatables'
-        }
-    script.
-        function deleteOnid() {
-            console.log("starting delete")
-            // delete first
-            fetch(actionid, {
-            method: 'DELETE'
-            }).then((resp) => {
-            return resp.json(); // or resp.text() or whatever the server sends
-            }).then((body) => {
-            alert("Delete succeded")
-            window.location.href='/eatables'
-            // TODO handle body
-            }).catch((error) => {
-            // TODO handle error
-            alert("Delete failed " + error )
-            });
-        }
+        script let actionid = "#{actionid}"
+        div
+            div.row
+                div(class='eatableAttr mr-3') Eatable ID is:
+                div #{eatableid}
+            div.row
+                div(class='eatableAttr mr-3') Eatable Type is:
+                div #{eatable_name}
+            div.row
+                div(class='eatableAttr mr-3') Eatable Size is:
+                div #{flavor}
+            div.row
+                div(class='eatableAttr mr-3') Eatable Cost is:
+                div #{price}
+            button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete
+            button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
+        script.
+            function cancel() {
+                window.location.href='/eatables'
+            }
+        script.
+            function deleteOnid() {
+                console.log("starting delete")
+                // delete first
+                fetch(actionid, {
+                method: 'DELETE'
+                }).then((resp) => {
+                return resp.json(); // or resp.text() or whatever the server sends
+                }).then((body) => {
+                alert("Delete succeded")
+                window.location.href='/eatables'
+                // TODO handle body
+                }).catch((error) => {
+                // TODO handle error
+                alert("Delete failed " + error )
+                });
+            }
